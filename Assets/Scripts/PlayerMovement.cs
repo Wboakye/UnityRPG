@@ -7,10 +7,12 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed;
     private Rigidbody2D myRigidBody;
-    private Vector3 change;  
+    private Vector3 change;
+    private Animator animator;  
 
-    // Another way of setting reference to a component if not public. 
+    // Another way of setting reference to a component if not public 
     void Start() {
+        animator = GetComponent<Animator>();
         myRigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -22,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
         if(change != Vector3.zero)
         {
             MoveCharacter();
+            //Must be exact same as Blended Tree Left Panel +
+            animator.SetFloat("moveX", change.x);
+            animator.SetFloat("moveY", change.y);
         }
 
     }
