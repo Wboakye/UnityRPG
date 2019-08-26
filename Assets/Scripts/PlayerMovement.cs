@@ -16,22 +16,34 @@ public class PlayerMovement : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
     }
 
-    // Set v3 change (xyz) to 0. Get available input. If input, call MoveCharacter()
-    void Update() {
+    // Set v3 change (xyz) to 0. Get available input. Callall UpdateAnimationAndMove()
+    void Update() 
+    {
         change = Vector3.zero;
         change.x = Input.GetAxisRaw("Horizontal");
         change.y = Input.GetAxisRaw("Vertical");
-        if(change != Vector3.zero)
-        {
-            MoveCharacter();
-            //Must be exact same as Blended Tree Left Panel +
-            animator.SetFloat("moveX", change.x);
-            animator.SetFloat("moveY", change.y);
-        }
+        UpdateAnimationAndMove();
 
     }
 
-    void MoveCharacter() {
+    void UpdateAnimationAndMove()
+    {
+        if (change != Vector3.zero)
+        {
+            MoveCharacter();
+            //Must be exact same as Blend Tree Left Panel +
+            animator.SetFloat("moveX", change.x);
+            animator.SetFloat("moveY", change.y);
+            animator.SetBool("walking", true);
+        }
+        else
+        {
+            animator.SetBool("walking", false);
+        }
+    }
+
+    void MoveCharacter() 
+    {
         myRigidBody.MovePosition(
             transform.position + change * speed * Time.deltaTime
         );
